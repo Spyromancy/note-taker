@@ -15,8 +15,7 @@ app.get('/notes', (req, res) => {
 })
 
 app.get('/api/notes', (req, res) => {
-    results = notes
-    res.json(results);
+    res.json(notes);
 });
 
 app.post('/api/notes', (req,res) => {
@@ -30,9 +29,15 @@ app.post('/api/notes', (req,res) => {
     res.json(note);
 });
 
-app.delete('/api/notes/:id', (req, res) => {
-    
-})
+ app.delete('/api/notes/:id', (req, res) => {
+    const id = req.params.id;
+    const result = notes.filter(item => item.id !== id);
+    fs.writeFileSync(
+        path.join(__dirname, './db/db.json'), 
+        JSON.stringify(result, null, 2)
+    );
+    res.json(result);
+ })
 
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, './public/index.html'))
