@@ -1,5 +1,5 @@
 const express = require('express');
-const notes = require('./db/db.json');
+var notes = require('./db/db.json');
 const fs = require('fs');
 const path = require('path');
 const { v4: uuidv4 } = require('uuid');
@@ -36,7 +36,8 @@ app.post('/api/notes', (req,res) => {
         path.join(__dirname, './db/db.json'), 
         JSON.stringify(result, null, 2)
     );
-    res.json(result);
+    notes = result;
+    res.send();
  })
 
 app.get('*', (req, res) => {
